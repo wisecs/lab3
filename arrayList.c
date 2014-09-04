@@ -26,6 +26,10 @@ void removeElement(arrayList * arylstP, int index)
    return;
 }
       
+static int getSize(primitiveType type)
+{
+    return 0;
+}
 
 void printArray(arrayList * arylstP)
 {
