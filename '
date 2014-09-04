@@ -18,18 +18,36 @@ arrayList * initialize(primitiveType type)
    return list;
 }
 
+/* Returns the size in bytes of the data type that the parameter typ represents 
+ * Parameters: type - a primitiveType enum
+ * Return: the number of bytes.  0 indicates an incorrect parameter.
+ */
+static int getSize(primitiveType type)
+{
+    switch(type){
+        case charType:
+            return sizeof(char);
+        case shortType:
+            return sizeof(short);
+        case intType:
+            return sizeof(int);
+        default:
+            return 0;
+    }
+}
+
 /* 
  */
 void addElement(arrayList * arylstP, void * element)
 {
-    return; 
+   return;
 }
 
 /* 
  */
 void removeElement(arrayList * arylstP, int index)
 {
-    return;
+   return;
 }
 
 /* 
@@ -54,20 +72,3 @@ void printArray(arrayList * arylstP)
    printf("\n");
 }
 
-/* Returns the size in bytes of the data type that the parameter typ represents 
- * Parameters: type - a primitiveType enum
- * Return: the number of bytes.  0 indicates an incorrect parameter.
- */
-static int getSize(primitiveType type)
-{
-    switch(type){
-        case charType:
-            return sizeof(char);
-        case shortType:
-            return sizeof(short);
-        case intType:
-            return sizeof(int);
-        default:
-            return 0;
-    }
-}
