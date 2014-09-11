@@ -6,28 +6,48 @@
 //static essentially makes it private to this file 
 static int getSize(primitiveType type);
 
+/* Returns the size in bytes of the data type that the parameter typ represents 
+ * Parameters: type - a primitiveType enum
+ * Return: the number of bytes.  0 indicates an incorrect parameter.
+ */
+
+static int getSize(primitiveType type)
+{
+    if(type == charType)
+        return  sizeof(char);
+    else if(type == shortType)
+        return sizeof(short);
+    else if(type == intType)
+        return sizeof(int);
+}
+
 /* 
  */
 arrayList * initialize(primitiveType type)
 {
-   arrayList list;
-   list.array = malloc(sizeof(type)*10);
-   list.elementSize = getSize(type);
-   list.numElements = 0;
-   list.arraySize = 10;
-   list.type = type;
+    arrayList list;
+    list.elementSize = getSize(type);
+    list.array = malloc(getSize(type) * 4);
+    list.numElements = 0;
+    list.arraySize = 4;
+    list.type = type;
    
-   arrayList* listP = &list;
-   return listP;
+    arrayList* listP = &list;
+    return listP;
 }
 
 /* 
+ * When an arrayList is passed to this method,
+ * its fields change, such as numElements changing
+ * from 0, to 32767.
+ *
+ * I wish it didn't.
  */
 void addElement(arrayList * arylstP, void * element)
 {
     /*if(arylstP->numElements == arylstP->arraySize)
         arylstP->array = malloc(sizeof(arylstP->array)*2);*/
-    int pos = arylstP->elementSize * arylstP->numElements;
+    int pos = arylstP->numElements;
     switch(arylstP->type){
         case charType:
             ((char*) arylstP->array)[pos] = *((char*) element);
@@ -82,20 +102,3 @@ void printArray(arrayList * arylstP)
     printf("\n");
 }
 
-/* Returns the size in bytes of the data type that the parameter typ represents 
- * Parameters: type - a primitiveType enum
- * Return: the number of bytes.  0 indicates an incorrect parameter.
- */
-static int getSize(primitiveType type)
-{
-    switch(type){
-        case charType:
-            return sizeof(char);
-        case shortType:
-            return sizeof(short);
-        case intType:
-            return sizeof(int);
-        default:
-            return 0;
-    }
-}
