@@ -45,7 +45,7 @@ arrayList * initialize(primitiveType type)
 void addElement(arrayList * arylstP, void * element)
 {
     if(arylstP->numElements == arylstP->arraySize){
-        char* array = malloc(sizeof(arylstP->array)*2);
+        char* array = malloc(arylstP->numElements * 2 * arylstP->elementSize);
         int i;
         for(i = 0; i < (arylstP->numElements * arylstP->elementSize); i++) {
             ((char*) array)[i] = ((char*) arylstP->array)[i];
