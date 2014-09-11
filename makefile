@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -g -Wall 
+CFLAGS = -g -O1 -Wall 
 
 arrayList: main.o
 
