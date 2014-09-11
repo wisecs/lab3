@@ -6,11 +6,10 @@
 //static essentially makes it private to this file 
 static int getSize(primitiveType type);
 
-/* Returns the size in bytes of the data type that the parameter typ represents 
+/* Returns the size in bytes of the data type that the parameter type represents.
  * Parameters: type - a primitiveType enum
  * Return: the number of bytes.  0 indicates an incorrect parameter.
  */
-
 static int getSize(primitiveType type)
 {
     if(type == charType)
@@ -22,7 +21,9 @@ static int getSize(primitiveType type)
     else return -1;
 }
 
-/* 
+/* Dynamically allocates a new arrayList with size of 4 and returns it.
+ * Parameters: type - the primitiveType that you want the array to be of
+ * Return: an arrayList of the specified type
  */
 arrayList * initialize(primitiveType type)
 {
@@ -36,13 +37,28 @@ arrayList * initialize(primitiveType type)
     return list;
 }
 
-/* 
- * 
+/* Appends the specified element to the specified arrayList.  Doubles the size of the
+ * array if it is at capacity.
+ * Parameters: arylstP - a pointer to the arrayList you want to add to
+ *             element - a pointer to the element you want to add
  */
 void addElement(arrayList * arylstP, void * element)
 {
-    /*if(arylstP->numElements == arylstP->arraySize)
-        arylstP->array = malloc(sizeof(arylstP->array)*2);*/
+    if(arylstP->numElements == arylstP->arraySize){
+        void* array = malloc(sizeof(arylstP->array)*2);
+        int i;
+        for(i = 0; i < arylstP->numElements; i++){
+            if(arylstP->type == charType)
+                ((char*) array)[i] = ((char*) arylstP->array)[i];
+            else if(arylstP->type == shortType)
+                ((short*) array)[i] = ((short*) arylstP->array)[i];
+            else if(arylstP->type == intType)
+                ((int*) array)[i] = ((int*) arylstP->array)[i];
+
+        }
+        arylstP->array = array;
+        arylstP->arraySize *= 2;
+    }
     int pos = arylstP->numElements;
     switch(arylstP->type){
         case charType:
@@ -56,14 +72,29 @@ void addElement(arrayList * arylstP, void * element)
     return;
 }
 
-/* 
+/* Removes the element at the speified index, shifting all following elements left
+ * Paremeters: arylstP - pointer to the arrayList you want to remove from
+ *             index - the index of the element you want to remove
  */
 void removeElement(arrayList * arylstP, int index)
 {
-    return 0;
+    int n = arylstP->numElements--;
+    for(;index < n; index++) {
+        if (arylstP->type == charType){
+            ((char*) arylstP->array)[index] = ((char*)arylstP->array)[index+1];
+        }
+        else if (arylstP->type == shortType){
+            ((short*) arylstP->array)[index] = ((short*)arylstP->array)[index+1];
+        }
+        else if (arylstP->type == intType){
+            ((int*) arylstP->array)[index] = ((int*)arylstP->array)[index+1];
+        }
+    }
+    return;
 }
 
-/* 
+/* Prints the specified arrayList
+ * Parameters: arylstP - a pointer to the arrayList you want to print
  */
 void printArray(arrayList * arylstP)
 {
