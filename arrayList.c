@@ -19,29 +19,25 @@ static int getSize(primitiveType type)
         return sizeof(short);
     else if(type == intType)
         return sizeof(int);
+    else return -1;
 }
 
 /* 
  */
 arrayList * initialize(primitiveType type)
 {
-    arrayList list;
-    list.elementSize = getSize(type);
-    list.array = malloc(getSize(type) * 4);
-    list.numElements = 0;
-    list.arraySize = 4;
-    list.type = type;
+    arrayList* list = malloc(sizeof(arrayList));
+    list->elementSize = getSize(type);
+    list->array = malloc(list->elementSize * 4);
+    list->numElements = 0;
+    list->arraySize = 4;
+    list->type = type;
    
-    arrayList* listP = &list;
-    return listP;
+    return list;
 }
 
 /* 
- * When an arrayList is passed to this method,
- * its fields change, such as numElements changing
- * from 0, to 32767.
- *
- * I wish it didn't.
+ * 
  */
 void addElement(arrayList * arylstP, void * element)
 {
@@ -64,17 +60,7 @@ void addElement(arrayList * arylstP, void * element)
  */
 void removeElement(arrayList * arylstP, int index)
 {
-    /*int pos = arylstP->elementSize * arylstP->numElements;
-    switch(arylstP->type){
-        case charType:
-            ((char*) arylstP->array)[pos] = *((char*) element);
-        case shortType:
-            ((short*) arylstP->array)[pos] = *(short*)element;
-        case intType:
-            ((int*) arylstP->array)[pos] = *(int*)element;
-    }
-    arylstP->numElements++;
-    return;*/
+    return 0;
 }
 
 /* 
