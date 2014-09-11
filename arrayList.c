@@ -45,29 +45,21 @@ arrayList * initialize(primitiveType type)
 void addElement(arrayList * arylstP, void * element)
 {
     if(arylstP->numElements == arylstP->arraySize){
-        void* array = malloc(sizeof(arylstP->array)*2);
+        char* array = malloc(sizeof(arylstP->array)*2);
         int i;
-        for(i = 0; i < arylstP->numElements; i++){
-            if(arylstP->type == charType)
-                ((char*) array)[i] = ((char*) arylstP->array)[i];
-            else if(arylstP->type == shortType)
-                ((short*) array)[i] = ((short*) arylstP->array)[i];
-            else if(arylstP->type == intType)
-                ((int*) array)[i] = ((int*) arylstP->array)[i];
-
+        for(i = 0; i < (arylstP->numElements * arylstP->elementSize); i++) {
+            ((char*) array)[i] = ((char*) arylstP->array)[i];
         }
         arylstP->array = array;
         arylstP->arraySize *= 2;
     }
-    int pos = arylstP->numElements;
-    switch(arylstP->type){
-        case charType:
-            ((char*) arylstP->array)[pos] = *((char*) element);
-        case shortType:
-            ((short*) arylstP->array)[pos] = *(short*)element;
-        case intType:
-            ((int*) arylstP->array)[pos] = *(int*)element;
-    }
+    int pos = arylstP->numElements; 
+    if(arylstP->type == charType)
+        ((char*) arylstP->array)[pos] = *((char*) element);
+    else if(arylstP->type == shortType)
+        ((short*) arylstP->array)[pos] = *(short*)element;
+    else if(arylstP->type == intType)
+        ((int*) arylstP->array)[pos] = *((int*)element);
     arylstP->numElements++;
     return;
 }
@@ -79,7 +71,7 @@ void addElement(arrayList * arylstP, void * element)
 void removeElement(arrayList * arylstP, int index)
 {
     int n = arylstP->numElements--;
-    for(;index < n; index++) {
+    for(;index < n+1; index++) {
         if (arylstP->type == charType){
             ((char*) arylstP->array)[index] = ((char*)arylstP->array)[index+1];
         }
